@@ -1,7 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 #ignore credentials
-/src/assets/service-cred.json
+/src/assets/*.json
+/src/assets/firebaseconfig.ts
 
 # compiled output
 /dist

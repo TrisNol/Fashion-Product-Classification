@@ -135,6 +135,7 @@ export class AppComponent {
       let s: string;
     s = this.firebaseServiceService.uploadFileToFirebase(event);
     } catch (error) {
+      console.log(error);
       throwError(error);
     }
   }
