@@ -1,0 +1,30 @@
+<div class="testclass">
+  <div class="container" appDnd (fileDropped)="onFileDropped($event)">
+    <input class="file-input" type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event.target.files)"
+      accept=".jpg" />
+    <h3>Drag and drop file here</h3>
+    <h3>or</h3><br><br>
+    <label for="fileDropRef">Browse for file</label>
+  </div>
+  <div class="files-list">
+    <div class="info">
+      <!--<app-progress [progress]="file?.progress"></app-progress>-->
+      <mat-spinner mode="indeterminate" *ngIf="working" class="spinner"></mat-spinner>
+    </div>  
+    <div class="single-file" *ngFor="let file of files; let i = index">
+      <div class="info">
+        <img *ngIf="file" [src]="file.url" width="100px" height="100px"><br>
+        <button mat-button class="delete" width="20px" (click)="deleteFile(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <mat-chip-list>
+          <div *ngFor="let tag of tags[i]">
+            <mat-chip>{{ tag }}</mat-chip>
+          </div>
+        </mat-chip-list>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

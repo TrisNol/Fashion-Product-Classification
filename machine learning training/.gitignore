@@ -1,0 +1,4 @@
+assets/images/*
+**/__pycache__
+.vscode/
+model

@@ -1,0 +1,4 @@
+model
+.vscode
+**/__pycache__
+*.log
