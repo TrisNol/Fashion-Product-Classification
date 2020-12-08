@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS, cross_origin
 import tensorflow as tf
 import logging
@@ -13,10 +13,16 @@ app = Flask(__name__)
 logging.basicConfig(filename='demo.log', level=logging.DEBUG)
 cors = CORS(app)
 
+@app.route('/<path:path>', methods=['GET'])
+def static_proxy(path):
+    if path.endswith(".js"): 
+        return send_from_directory('./static', path, mimetype="application/javascript")
+    return send_from_directory('./static', path)
+
 
 @app.route('/')
-def index():
-    return "Hello, World!"
+def root():
+  return send_from_directory('./static', 'index.html')
 
 
 @app.route('/categories', methods=['POST'])
