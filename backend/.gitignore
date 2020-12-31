@@ -1,4 +1,5 @@
-model
+model/*
+encoder/*
 .vscode
 **/__pycache__
 *.log
