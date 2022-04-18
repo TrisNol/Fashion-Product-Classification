@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FirebaseServiceService } from 'src/services/firebase-service.service';
 import { ApiService } from 'src/core/services/api.service';
 import { throwError } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
@@ -21,27 +20,28 @@ export class AppComponent {
 
   tags: Array<Array<string>> = [];
 
-  constructor(private firebaseServiceService: FirebaseServiceService, private apiService: ApiService, private snackServie: SnackbarService) {
-    this.firebaseServiceService.downloadUrlEvent.subscribe(url => {
-      this.files[this.files.length - 1].url = url;
-      this.apiService.getCategories(url).subscribe(
-        res => { this.tags.push(res['categories']); 
-        this.working = false;},
-        err => {
-          this.hasError = true;
-          this.errorMessage = err.message;
-          this.working = false;
-          snackServie.openSnackbar("Something went wrong, please try again later!");
-        },
-      );
-    })
+  constructor(private apiService: ApiService, private snackServie: SnackbarService) {
+    // this.firebaseServiceService.downloadUrlEvent.subscribe(url => {
+    //   this.files[this.files.length - 1].url = url;
+    //   this.apiService.getCategories(url).subscribe(
+    //     res => {
+    //       this.tags.push(res['categories']);
+    //       this.working = false;
+    //     },
+    //     err => {
+    //       this.hasError = true;
+    //       this.errorMessage = err.message;
+    //       this.working = false;
+    //       snackServie.openSnackbar("Something went wrong, please try again later!");
+    //     },
+    //   );
+    // })
   }
 
   /**
    * on file drop handler
    */
   onFileDropped($event) {
-    //this.uploadFileToFirebase($event);
     this.prepareFilesList($event);
     console.log(this.files.length);
     this.working = true;
@@ -51,7 +51,6 @@ export class AppComponent {
    * handle file from browsing
    */
   fileBrowseHandler(files) {
-    //this.uploadFileToFirebase(files);
     this.prepareFilesList(files);
     console.log(this.files.length);
     this.working = true;
@@ -93,7 +92,7 @@ export class AppComponent {
   prepareFilesList(files: Array<any>) {
     for (const item of files) {
       var ext = item.name.substr(item.name.lastIndexOf('.') + 1);
-      if(ext !='jpg') {
+      if (ext != 'jpg') {
         this.snackServie.openSnackbar("App only supports .jpg files");
         this.working = false;
         return;
@@ -130,10 +129,14 @@ export class AppComponent {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 
-  uploadFileToFirebase(event) {
+  uploadFileToFirebase(file: File) {
     try {
-      let s: string;
-    s = this.firebaseServiceService.uploadFileToFirebase(event);
+      this.apiService.convertFile(file).subscribe(image => {
+        this.apiService.categorizeImage(image).subscribe(res => {
+          this.tags.push(res['categories']);
+          this.working = false;
+        });
+      })
     } catch (error) {
       console.log(error);
       throwError(error);

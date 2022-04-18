@@ -4,3 +4,5 @@ encoder/*
 **/__pycache__
 *.log
 static/*
+
+venv/
