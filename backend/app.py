@@ -1,4 +1,3 @@
-import json
 import logging
 
 from fastapi import FastAPI, HTTPException
@@ -31,7 +30,18 @@ class Categories(BaseModel):
     categories: list
 
 @app.post('/categories')
-def process_image_external(image: ImageModel):
+def categorize_image(image: ImageModel) -> Categories:
+    """Categorize an image into multiple product categories using TensorFlow.
+
+    Args:
+        image (ImageModel): Base64 encoded JPG image
+
+    Raises:
+        HTTPException: Request could not be processed (e.g. wrong image format)
+
+    Returns:
+        Categories: Identified labels
+    """
     try:
         # get base64 encoded image transformed
         image = util.decode_img(image.image)
@@ -42,7 +52,6 @@ def process_image_external(image: ImageModel):
 
         return Categories(categories=predictions[0])
     except Exception as e:
-        print(e)
         raise HTTPException(400)
 
 if __name__ == '__main__':
