@@ -1,5 +1,6 @@
-flask
-flask-cors
+uvicorn
+fastapi
+pydantic
 tensorflow
 numpy
 scikit-learn
