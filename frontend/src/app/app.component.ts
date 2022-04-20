@@ -98,9 +98,9 @@ export class AppComponent {
         return;
       }
       item.progress = 0;
-      this.files.push(item);
+      this.apiService.convertFile(item).subscribe(imageBase64 => this.files.push({ progress: 0, url: 'data:image/jpeg;base64,' + imageBase64 }));
       try {
-        this.uploadFileToFirebase(item);
+        this.categorizeImage(item);
         this.error = false;
       } catch (error) {
         this.hasError = true;
@@ -129,7 +129,7 @@ export class AppComponent {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 
-  uploadFileToFirebase(file: File) {
+  categorizeImage(file: File) {
     try {
       this.apiService.convertFile(file).subscribe(image => {
         this.apiService.categorizeImage(image).subscribe(res => {
