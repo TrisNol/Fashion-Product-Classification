@@ -1,22 +1,20 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { ApiService } from 'src/core/services/api.service';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { throwError } from 'rxjs';
+import { ApiService } from './services/api.service';
 import { SnackbarService } from './snackbar.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  [x: string]: any;
   title = 'IHK-Webseite';
-  @ViewChild("fileDropRef", { static: false }) fileDropEl: ElementRef;
+  @ViewChild("fileDropRef", { static: false }) fileDropEl: ElementRef | undefined;
   files: any[] = [];
   working = false;
   hasError = false;
-  errorMessage: string;
+  errorMessage: string = "";
 
   tags: Array<Array<string>> = [];
 
@@ -26,17 +24,22 @@ export class AppComponent {
   /**
    * on file drop handler
    */
-  onFileDropped($event: Array<any>) {
-    this.prepareFilesList($event);
-    this.working = true;
+  onFileDropped($event: any | undefined) {
+    if ($event) {
+      this.prepareFilesList($event);
+      this.working = true;
+    }
   }
 
   /**
    * handle file from browsing
    */
-  fileBrowseHandler(files: Array<any>) {
-    this.prepareFilesList(files);
-    this.working = true;
+  fileBrowseHandler(event: any | undefined) {
+    let files = event.files;
+    if (files) {
+      this.prepareFilesList(files);
+      this.working = true;
+    }
   }
 
   /**
@@ -82,15 +85,14 @@ export class AppComponent {
       this.apiService.convertFile(item).subscribe(imageBase64 => this.files.push({ progress: 100, url: 'data:image/jpeg;base64,' + imageBase64 }));
       try {
         this.categorizeImage(item);
-        this.error = false;
-      } catch (error) {
+      } catch (error: any) {
         this.hasError = true;
         this.errorMessage = error.message;
         this.working = false;
         this.snackServie.openSnackbar(this.errorMessage);
       }
     }
-    this.fileDropEl.nativeElement.value = "";
+    this.fileDropEl!.nativeElement.value = "";
     this.uploadFilesSimulator(0);
     files = [];
   }
@@ -99,7 +101,7 @@ export class AppComponent {
   * @param bytes (File size in bytes)
   * @param decimals (Decimals point)
   */
-  formatBytes(bytes, decimals = 2) {
+  formatBytes(bytes: number, decimals = 2) {
     if (bytes === 0) {
       return "0 Bytes";
     }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http'
-import { environment } from 'src/environments/environment';
+import { environment } from 'environments/environment';
 import { catchError, timeout } from 'rxjs/operators';
 import { Observable, ReplaySubject, throwError } from 'rxjs';
 
@@ -24,7 +24,7 @@ export class ApiService {
     const result = new ReplaySubject<string>(1);
     const reader = new FileReader();
     reader.readAsBinaryString(file);
-    reader.onload = (event) => result.next(btoa(event.target.result.toString()));
+    reader.onload = (event: any) => result.next(btoa(event.target.result.toString()));
     return result;
   }
 

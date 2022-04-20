@@ -1,17 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { DndDirective } from './dnd.directive';
 import { ProgressComponent } from './progress/progress.component';
 
-import { MatChipsModule } from '@angular/material/chips'
-import { HttpClientModule } from '@angular/common/http';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from "@angular/material/icon";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
+import {  MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,16 +21,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProgressComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     AppRoutingModule,
-    MatChipsModule,
     HttpClientModule,
     MatIconModule,
-    MatProgressSpinnerModule,
+    MatChipsModule,
     MatSnackBarModule,
-    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
-  providers: [MatSnackBarModule],
+  providers: [MatSnackBar],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
