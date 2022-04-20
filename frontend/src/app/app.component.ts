@@ -21,21 +21,6 @@ export class AppComponent {
   tags: Array<Array<string>> = [];
 
   constructor(private apiService: ApiService, private snackServie: SnackbarService) {
-    // this.firebaseServiceService.downloadUrlEvent.subscribe(url => {
-    //   this.files[this.files.length - 1].url = url;
-    //   this.apiService.getCategories(url).subscribe(
-    //     res => {
-    //       this.tags.push(res['categories']);
-    //       this.working = false;
-    //     },
-    //     err => {
-    //       this.hasError = true;
-    //       this.errorMessage = err.message;
-    //       this.working = false;
-    //       snackServie.openSnackbar("Something went wrong, please try again later!");
-    //     },
-    //   );
-    // })
   }
 
   /**
