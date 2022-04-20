@@ -1,8 +1,17 @@
-import tensorflow as tf
 from tensorflow import keras
-import numpy as np
 
-def train_model(train_images, train_labels, test_images, test_labels):
+def train_model(train_images: list, train_labels: list, test_images: list, test_labels: list) -> keras.Model:
+    """Train a conv. neural network using the provided input
+
+    Args:
+        train_images (list): JPG images as np.array used for training
+        train_labels (list): Multi-label representation of labels
+        test_images (list): JPG images as np.array used for testing
+        test_labels (list): Multi-label representation of labels
+
+    Returns:
+        keras.Model: Trained model
+    """
 
     model = keras.Sequential([
         keras.layers.Conv2D(64, (3, 3), activation="relu", input_shape=(60, 80, 3)),
@@ -24,6 +33,12 @@ def train_model(train_images, train_labels, test_images, test_labels):
 
     return model
 
-def save_model(model, path):
+def save_model(model: keras.Model, path: str) -> None:
+    """Persist the given Keras model to disk
+
+    Args:
+        model (keras.Model): Model to be saved
+        path (str): Path of location
+    """
     model.save(path)
     print('Saved model to disk')

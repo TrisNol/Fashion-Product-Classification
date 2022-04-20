@@ -1,9 +1,15 @@
 import pandas as pd
+from sklearn.preprocessing import MultiLabelBinarizer
 import tensorflow as tf
 import numpy as np
 
 
 def get_data():
+    """Read CSV input from path and return the processed data
+
+    Returns:
+        (list, list): (data, labels) of processed data
+    """
     data = pd.read_csv("./assets/styles.csv", error_bad_lines=False)
     # remove unrelevant columns
     data = data.drop(['productDisplayName', 'year', 'season'], axis=1)
@@ -23,7 +29,17 @@ def get_data():
     return (data, labels)
 
 
-def decode_img(img, width, height):
+def decode_img(img: any, width: int, height: int) -> np.array:
+    """Decode JPG to np.array of given width and height
+
+    Args:
+        img (any): Image in JPG format to be processed
+        width (int): Widht of output
+        height (int): Height of ouptput
+
+    Returns:
+        np.array: Converted image
+    """
     # convert the compressed string to a 3D uint8 tensor
     img = tf.image.decode_jpeg(img, channels=3)
     # Use `convert_image_dtype` to convert to floats in the [0,1] range.
@@ -32,19 +48,32 @@ def decode_img(img, width, height):
     return tf.image.resize(img, [width, height])
 
 
-def save_encoder():
+def save_encoder(path: str) -> MultiLabelBinarizer:
+    """Train, persist and return the MultiLableBinarizer
+
+    Args:
+        path (str): Path of where to store the encoder
+
+    Returns:
+        MultiLabelBinarizer: Trained encoder
+    """
     (data, labels) = get_data()
     # encode subCategory and baseColour into binary Array
     from sklearn.preprocessing import MultiLabelBinarizer
     mlb = MultiLabelBinarizer()
     mlb.fit(labels)
 
-    np.save('./encoder/classes.npy', mlb.classes_)
+    np.save(path, mlb.classes_)
 
     return mlb
 
 
-def prepare_data():
+def prepare_data() -> tuple:
+    """Do the whole data preparation - incl. data conversion and test/train split.
+
+    Returns:
+        tuple: (X_train, y_train, X_test, y_test)
+    """
     (data, labels) = get_data()
     from sklearn.preprocessing import MultiLabelBinarizer
     mlb = MultiLabelBinarizer()
