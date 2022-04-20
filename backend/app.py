@@ -4,6 +4,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 import utils.ml_utils as util
+from models.Categories import Categories
+from models.ImageModel import ImageModel
 
 model = util.getModel(path="./model/")
 encoder = util.getEncoder(path="./encoder/classes.npy")
@@ -21,13 +23,6 @@ app.add_middleware(
 )
 
 logging.basicConfig(filename='demo.log', level=logging.DEBUG)
-
-from pydantic import BaseModel
-class ImageModel(BaseModel):
-    image: str
-
-class Categories(BaseModel):
-    categories: list
 
 @app.post('/categories')
 def categorize_image(image: ImageModel) -> Categories:
