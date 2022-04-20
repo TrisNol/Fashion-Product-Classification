@@ -41,18 +41,16 @@ export class AppComponent {
   /**
    * on file drop handler
    */
-  onFileDropped($event) {
+  onFileDropped($event: Array<any>) {
     this.prepareFilesList($event);
-    console.log(this.files.length);
     this.working = true;
   }
 
   /**
    * handle file from browsing
    */
-  fileBrowseHandler(files) {
+  fileBrowseHandler(files: Array<any>) {
     this.prepareFilesList(files);
-    console.log(this.files.length);
     this.working = true;
   }
 
@@ -68,21 +66,20 @@ export class AppComponent {
     this.files.splice(index, 1);
     this.tags.splice(index, 1);
   }
+
   uploadFilesSimulator(index: number) {
-    setTimeout(() => {
-      if (index === this.files.length) {
-        return;
-      } else {
-        const progressInterval = setInterval(() => {
-          if (this.files[index].progress === 100) {
-            clearInterval(progressInterval);
-            this.uploadFilesSimulator(index + 1);
-          } else {
-            this.files[index].progress += 5;
-          }
-        }, 200);
-      }
-    }, 1000);
+    if (index === this.files.length) {
+      return;
+    } else {
+      const progressInterval = setInterval(() => {
+        if (this.files[index].progress === 100) {
+          clearInterval(progressInterval);
+          this.uploadFilesSimulator(index + 1);
+        } else {
+          this.files[index].progress += 5;
+        }
+      }, 200);
+    }
   }
 
   /**
@@ -97,8 +94,7 @@ export class AppComponent {
         this.working = false;
         return;
       }
-      item.progress = 0;
-      this.apiService.convertFile(item).subscribe(imageBase64 => this.files.push({ progress: 0, url: 'data:image/jpeg;base64,' + imageBase64 }));
+      this.apiService.convertFile(item).subscribe(imageBase64 => this.files.push({ progress: 100, url: 'data:image/jpeg;base64,' + imageBase64 }));
       try {
         this.categorizeImage(item);
         this.error = false;
