@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+
+  backend:
+    container_name: faschion_product_classification_backend
+    hostname: faschion_product_classification_backend
+    build: ./backend
+    image: ghcr.io/trisnol/faschion-product-classification-backend
+
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+
+  frontend:
+    container_name: faschion_product_classification_frontend
+    hostname: faschion_product_classification_frontend
+    build: ./frontend
+    image: ghcr.io/trisnol/faschion-product-classification-frontend
+
+    ports:
+      - 80:80
+    restart: unless-stopped
+    depends_on:
+      - backend
