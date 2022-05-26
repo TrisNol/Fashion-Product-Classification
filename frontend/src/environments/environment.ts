@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backend_endpoint: "http://localhost:5000/categories"
+  apiUrl: window["env"]["apiUrl"] || "default",
 };
 
 /*

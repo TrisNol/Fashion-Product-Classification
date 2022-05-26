@@ -20,6 +20,8 @@ services:
 
     ports:
       - 80:80
+    environment:
+      - API_URL=http://localhost:5000/categories
     restart: unless-stopped
     depends_on:
       - backend

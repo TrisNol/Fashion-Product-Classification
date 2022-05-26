@@ -15,7 +15,7 @@ export class ApiService {
   public getCategories(imagePath: string) {
     let params: HttpParams = new HttpParams();
     params.append("path", imagePath);
-    return this.http.post(environment.backend_endpoint, { path: imagePath }).pipe(timeout(5000), catchError(err => {
+    return this.http.post(environment.apiUrl, { path: imagePath }).pipe(timeout(5000), catchError(err => {
       return throwError(err);
     }))
   }
@@ -29,7 +29,7 @@ export class ApiService {
   }
 
   public categorizeImage(imageBase64: string): Observable<any> {
-    return this.http.post(environment.backend_endpoint, { image: imageBase64 });
+    return this.http.post(environment.apiUrl, { image: imageBase64 });
   }
 
 
