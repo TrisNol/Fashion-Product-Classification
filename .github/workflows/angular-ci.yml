@@ -1,0 +1,30 @@
+name: Angular CI
+
+on:
+  push:
+    branches:
+     - feature/*
+     - hotfix/*
+     - bugfix/*
+  pull_request:
+    branches:
+      - main
+      - dev
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  angular-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Call composite workflow 
+        uses: trisnol/workflows/angular-main@main
+        with: 
+          node_version: 16
+          path: ./frontend
