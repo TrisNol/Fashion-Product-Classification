@@ -1,9 +1,9 @@
-FROM node:alpine AS build
+FROM node:20.12.0-alpine3.19 AS build
 WORKDIR /app
 COPY . .
 RUN npm ci && npm run build --prod
 
-FROM nginx:alpine
+FROM nginx:1.25.4-alpine3.18-slim
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist/frontend /usr/share/nginx/html
 EXPOSE 80

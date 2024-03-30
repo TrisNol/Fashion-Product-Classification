@@ -1,14 +1,14 @@
 # Fashion Product Classification
 This project is based on the following dataset containing fashion product images and their categories.
-Small dataset: https://www.kaggle.com/paramaggarwal/fashion-product-images-small
-Big dataset: https://www.kaggle.com/paramaggarwal/fashion-product-images-dataset
+- Small dataset: https://www.kaggle.com/paramaggarwal/fashion-product-images-small
+- Big dataset: https://www.kaggle.com/paramaggarwal/fashion-product-images-dataset
 
 ## Components
 The project consists of three main components:
 
 ### Training Component
 In this module the machine learning model used to categorize images will be trained using the provided dataset.
-The main file called app.py will train a multi-label-encoder and a TensorFlow model, exporting them for further use.
+The main file called [app.py](./machine%20learning%20training/app.py) will train a multi-label-encoder and a TensorFlow model, exporting them for further use.
 
 ### Backend
 The backend component encapsulates a FastAPI REST API used to pass images to the model for categorization. In order to use this component, the encoder and model folder of the training components including their contents have to be copied into this project.
