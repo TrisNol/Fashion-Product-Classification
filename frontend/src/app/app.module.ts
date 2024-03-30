@@ -9,9 +9,9 @@ import { DndDirective } from './dnd.directive';
 import { ProgressComponent } from './progress/progress.component';
 
 import { MatIconModule } from "@angular/material/icon";
-import { MatChipsModule } from "@angular/material/chips";
-import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
-import {  MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import {MatChipsModule} from '@angular/material/chips';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -30,7 +30,6 @@ import {  MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     MatSnackBarModule,
     MatProgressSpinnerModule
   ],
-  providers: [MatSnackBar],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

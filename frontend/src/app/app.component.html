@@ -16,11 +16,11 @@
         <button mat-button class="delete" width="20px" (click)="deleteFile(i)">
           <mat-icon>delete</mat-icon>
         </button>
-        <mat-chip-list>
+        <mat-chip-listbox>
           <div *ngFor="let tag of tags[i]">
             <mat-chip>{{ tag }}</mat-chip>
           </div>
-        </mat-chip-list>
+        </mat-chip-listbox>
       </div>
     </div>
   </div>
