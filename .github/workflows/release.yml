@@ -37,7 +37,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build Docker image
-        run: docker-compose build 
+        run: docker compose build 
 
       - name: Push Docker image to ghcr.io
-        run: docker-compose push
+        run: docker compose push
