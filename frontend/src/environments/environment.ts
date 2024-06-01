@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: window["env"]["apiUrl"] || "default",
+  apiUrl: window["env"]["apiUrl"] || "http://localhost:5000/categories",
 };
 
 /*
