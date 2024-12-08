@@ -4,9 +4,10 @@ import { ApiService } from './services/api.service';
 import { SnackbarService } from './snackbar.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
   title = 'IHK-Webseite';
