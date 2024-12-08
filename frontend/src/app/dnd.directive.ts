@@ -1,7 +1,8 @@
 import { Directive, HostListener, HostBinding, EventEmitter, Output } from '@angular/core';
 
 @Directive({
-  selector: '[appDnd]'
+    selector: '[appDnd]',
+    standalone: false
 })
 export class DndDirective {
 
